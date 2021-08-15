@@ -12,11 +12,12 @@ class WebSocketThread:
         self.socket = None
 
     def start(self):
-        self.socket = WebSocket(url=''.join(self.url), on_message=self.on_message, on_open=self.on_open, on_close=self.on_close, on_error=self.on_error)
+        self.socket = WebSocket(url=''.join(self.url), cb_on_message=self.on_message, cb_on_open=self.on_open, cb_on_close=self.on_close, cb_on_error=self.on_error)
         self.thread = GameThread(target=self.socket.start_socket_connection)
         self.thread.start()
     
     def stop(self):
-        if self.thread != None:
+        if self.socket != None:
             self.socket.stop()
+        if self.thread != None:
             self.thread._stop()
